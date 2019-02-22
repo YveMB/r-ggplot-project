@@ -53,3 +53,22 @@ ggplot(data=interviews_plotting, aes(x=no_membrs, color=village))+
 ##if we want to look at the frequency polygon but with density 
 ggplot(data=interviews_plotting, aes(x=no_membrs, y=stat(density), color=village))+
   geom_freqpoly(binwidth=1)
+
+##if we want to look at continuos data this can help 
+ggplot(data=interviews_plotting, aes(x=no_membrs, color=village))+
+ geom_density()
+
+##Looking at catagorical data
+##classic plot is a bar chart 
+ggplot(data=interviews_plotting, aes(x=respondent_wall_type, fill =village))+
+geom_bar()
+## to put them side by side 
+ggplot(data=interviews_plotting, aes(x=respondent_wall_type, fill =village))+
+  geom_bar(position="dodge")
+
+## to do four individual graphs, loose the grids and change the color
+ggplot(data=interviews_plotting, aes(x=village, fill=village))+
+  geom_bar(position="dodge")+
+  facet_wrap(~respondent_wall_type)+
+  theme(panel.grid.major=element_blank(), panel.grid.minor=element_blank())+
+  scale_fill_brewer(palette="RdBu")
