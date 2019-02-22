@@ -27,3 +27,29 @@ interview_plot_village<-ggplot(data=interviews_plotting,
   geom_smooth(method="lm")
 ggsave("fig_output/membrs_item.png", interview_plot_village, width=15, height=10, 
        dpi=72)
+
+ggplot(data=interviews_plotting, 
+       aes(x=no_membrs, y=number_items, color=village)) +
+  geom_jitter(alpha=0.5, width=0.15, height=0.15, size=2)+
+  geom_smooth(method="lm")
+
+ggplot(data=interviews_plotting, 
+       aes(x=rooms, y=village, color=respondent_wall_type)) +
+  geom_jitter(alpha=0.5, width=0.15, height=0.15, size=2)+
+  geom_smooth(method="lm")
+
+ggplot(data=interviews_plotting, 
+       aes(x=village, y=rooms)) +
+         geom_jitter(aes(color=respondent_wall_type), alpha=0.5, width=0.2, height=0.2, size=3)
+
+ ##if we want to look at the frequency of a variabe we could us a histogram
+ggplot(data=interviews_plotting, aes(x=no_membrs, fill=village))+
+  geom_histogram(binwidth=1, color="white")
+
+##if we want to look at the frequency polygon
+ggplot(data=interviews_plotting, aes(x=no_membrs, color=village))+
+  geom_freqpoly(binwidth=1)
+
+##if we want to look at the frequency polygon but with density 
+ggplot(data=interviews_plotting, aes(x=no_membrs, y=stat(density), color=village))+
+  geom_freqpoly(binwidth=1)
