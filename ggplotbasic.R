@@ -72,3 +72,104 @@ ggplot(data=interviews_plotting, aes(x=village, fill=village))+
   facet_wrap(~respondent_wall_type)+
   theme(panel.grid.major=element_blank(), panel.grid.minor=element_blank())+
   scale_fill_brewer(palette="RdBu")
+
+##to make the fill 100% and be a proportion, add labels position="fill" will put top but 
+## can also do - looks at wall type by village 
+ggplot(data=interviews_plotting, aes(x=respondent_wall_type, fill =village))+
+  geom_bar(position="fill")+
+  ylab("Proportion")+
+  xlab("Respondent Wall Type")+
+  stat_count(geom="text", 
+             aes(label=stat(count)), 
+             position= position_fill (vjust=0.5), colour="white")
+
+## can also do village by wall type
+ggplot(data=interviews_plotting, aes(x=village, fill =respondent_wall_type))+
+  geom_bar(position="fill")+
+  ylab("Proportion")+
+  xlab("Village")+
+  scale_fill_brewer(palette="Accent")+
+  stat_count(geom="text", 
+             aes(label=stat(count)), 
+             position= position_fill (vjust=0.5), colour="white")
+
+##doing box plots - with scatter plot over top by village
+ggplot(data=interviews_plotting,
+       aes(x=respondent_wall_type, y=rooms))+
+         geom_boxplot(alpha=0)+
+  geom_jitter(alpha=0.5, width=0.2, height=0.2, 
+              aes(colour=village))
+  
+##doing box plots - with scatter plot over top in red
+ggplot(data=interviews_plotting,
+       aes(x=respondent_wall_type, y=rooms))+
+  geom_boxplot(alpha=0)+
+  geom_jitter(alpha=0.5, width=0.2, height=0.2, colour="tomato")
+ 
+## doing 
+ggplot(data=interviews_plotting,
+       aes(x=respondent_wall_type, y=liv_count))+
+  geom_boxplot(alpha=0)+
+  geom_jitter(alpha=0.5, width=0.2, height=0.2, 
+              aes(colour=memb_assoc))
+
+counts<-data.frame()
+
+
+## doing 
+ggplot(data=interviews_plotting,
+       aes(x=respondent_wall_type, y=liv_count, fill=memb_assoc,
+           colour=memb_assoc))+
+  geom_boxplot(alpha=0.5)+
+  geom_point(alpha=0.5, 
+             position=position_jitterdodge(jitter.width=0.1, 
+                                             jitter.height=0.1)) 
+ ##violin plot  
+ggplot(data = interviews_plotting, 
+       aes(x=respondent_wall_type, y=rooms, colour = village))+
+  geom_violin(alpha=0)+
+  geom_jitter(alpha=0.5, width=0.2, height=0.2)
+
+## can also do labs(x="village", y="proportion", title="xx")
+ggplot(data = interviews_plotting,
+       aes(fill=respondent_wall_type, x=village))+
+  geom_bar(position=("fill"))+
+  stat_count(geom="text", aes(label=stat(count)),
+             position=position_fill(vjust=0.5), colour="white")+
+  ylab("Proportion")+
+  xlab("Village")+
+  labs(caption="Title should be here") + 
+  theme(plot.caption = element_text(hjust=0.5, size=rel(1.2)))+
+  ggtitle("Proportion of wall type by village")+
+  scale_fill_discrete(label=c("Burnt brick", "Cement", "Mud Daub", "Sun Bricks"))+
+  guides(fill=guide_legend(title="wall type"))
+
+## can also do labs(x="village", y="proportion", title="xx")
+ggplot(data = interviews_plotting,
+       aes(fill=memb_assoc, x=respondent_wall_type))+
+  geom_bar(position=("fill"))+
+  stat_count(geom="text", aes(label=stat(count)),
+             position=position_fill(vjust=0.5), colour="white")+
+  ylab("Proportion")+
+  xlab("Wall type")+
+  
+  ## can also do labs(x="village", y="proportion", title="xx")
+  ggplot(data = interviews_plotting,
+         aes(fill=memb_assoc, x=respondent_wall_type))+
+  geom_bar(position=("fill"))+
+  stat_count(geom="text", aes(label=stat(count)),
+             position=position_fill(vjust=0.5), colour="white")+
+  ylab("Proportion")+
+  xlab("Wall type")+
+  labs(caption="Title should be here") + 
+  theme(plot.caption = element_text(hjust=0.5, size=rel(1.2)))+
+  ggtitle("Proportion of wall type by village")+
+  scale_x_discrete(label=c("Burnt brick", "Cement", "Mud Daub", "Sun Bricks"))+
+  guides(fill=guide_legend(title="wall type"))+
+  scale_fill_discrete(label=c("No", "Yes", "No Response"))+
+  labs(caption="Title should be here") + 
+  theme(plot.caption = element_text(hjust=0.5))+
+  ggtitle("Proportion of wall type by village")+
+  guides(fill=guide_legend(title="Member Association"))+
+  facet_wrap(~village, nrow=3)+
+  theme(axis.text.x=element_text(angle=90, hjust=1))
