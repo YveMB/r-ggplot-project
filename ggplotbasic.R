@@ -154,22 +154,30 @@ ggplot(data = interviews_plotting,
   xlab("Wall type")+
   
   ## can also do labs(x="village", y="proportion", title="xx")
+  ##scale_y_reverse - puts 0 at top
   ggplot(data = interviews_plotting,
          aes(fill=memb_assoc, x=respondent_wall_type))+
   geom_bar(position=("fill"))+
   stat_count(geom="text", aes(label=stat(count)),
-             position=position_fill(vjust=0.5), colour="white")+
+             position=position_fill(vjust=0.5), colour="white", size=2)+
   ylab("Proportion")+
   xlab("Wall type")+
   labs(caption="Title should be here") + 
   theme(plot.caption = element_text(hjust=0.5, size=rel(1.2)))+
   ggtitle("Proportion of wall type by village")+
   scale_x_discrete(label=c("Burnt brick", "Cement", "Mud Daub", "Sun Bricks"))+
+  scale_y_continuous(breaks=c(0,0.5,1))+
   guides(fill=guide_legend(title="wall type"))+
   scale_fill_discrete(label=c("No", "Yes", "No Response"))+
-  labs(caption="Title should be here") + 
+  labs(caption="Title should be here", size=5) + 
   theme(plot.caption = element_text(hjust=0.5))+
   ggtitle("Proportion of wall type by village")+
-  guides(fill=guide_legend(title="Member Association"))+
+  guides(fill=guide_legend(title="Member\nAssociation"))+
   facet_wrap(~village, nrow=3)+
-  theme(axis.text.x=element_text(angle=90, hjust=1))
+  theme(axis.text.x=element_text(angle=90, hjust=1, size=10))
+
+## Plotting
+ggplot(data = interviews_plotting,
+       aes(fill=number_items, x=respondent_wall_type, y=number_items))+
+  geom_col()
+  
